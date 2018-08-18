@@ -36,9 +36,12 @@ void List::ClearList()
 	length = 0;
 }
 
-void List::GetElem(int i, ElemType * e)
+int List::GetElem(int i, ElemType * e)
 {
+	if (i<1 || i> length || length == 0)
+		return 0;
 	*e = list[i - 1];
+	return 1;
 }
 
 ElemType List::LocateElem(ElemType e)
@@ -52,25 +55,34 @@ ElemType List::LocateElem(ElemType e)
 	return 0;
 }
 
-void List::ListInsert(int i, ElemType e)
+int List::ListInsert(int i, ElemType e)
 {
+	if (length == MAXSIZE)
+		return 0;
+	if (i<1 || i>length + 1)
+		return 0;
 	length += 1;
 	for (int j = length - 1; j >= i; j--)
 	{
 		list[j] = list[j - 1];
 	}
 	list[i - 1] = e;
+	return 1;
 }
 
-void List::ListDelete(int i, ElemType *e)
+int List::ListDelete(int i, ElemType *e)
 {
+	if (length == 0)
+		return 0;
+	if (i<1 || i>length)
+		return 0;
 	length -= 1;
 	*e = list[i - 1];
 	for (int j = i - 1; j<length; j++)
 	{
 		list[j] = list[j + 1];
 	}
-
+	return 1;
 }
 
 int List::ListLength()

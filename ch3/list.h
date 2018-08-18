@@ -5,6 +5,7 @@
 using namespace std;
 
 typedef int ElemType;
+
 class List
 {
 private:
@@ -17,10 +18,10 @@ public:
 	void InitList();
 	bool ListEmpty();
 	void ClearList();
-	void GetElem(int i, ElemType * e);
+	int GetElem(int i, ElemType * e);
 	ElemType LocateElem(ElemType e);
-	void ListInsert(int i, ElemType e);
-	void ListDelete(int i, ElemType *e);
+	int ListInsert(int i, ElemType e);
+	int ListDelete(int i, ElemType *e);
 	int ListLength();
 	void showList();
 };
