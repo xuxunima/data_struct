@@ -1,10 +1,9 @@
-02-ÏßÐÔ½á¹¹3 Reversing Linked List £¨25 ·Ö£©
-Given a constant K and a singly linked list L, you are supposed to reverse the links of every K elements on L. For example, given L being 1¡ú2¡ú3¡ú4¡ú5¡ú6, if K=3, then you must output 3¡ú2¡ú1¡ú6¡ú5¡ú4; if K=4, you must output 4¡ú3¡ú2¡ú1¡ú5¡ú6.
+Given a constant K and a singly linked list L, you are supposed to reverse the links of every K elements on L. For example, given L being 1Â¡Ãº2Â¡Ãº3Â¡Ãº4Â¡Ãº5Â¡Ãº6, if K=3, then you must output 3Â¡Ãº2Â¡Ãº1Â¡Ãº6Â¡Ãº5Â¡Ãº4; if K=4, you must output 4Â¡Ãº3Â¡Ãº2Â¡Ãº1Â¡Ãº5Â¡Ãº6.
 
 Input Specification:
-Each input file contains one test case. For each case, the first line contains the address of the first node, a positive N (¡Ü10
+Each input file contains one test case. For each case, the first line contains the address of the first node, a positive N (Â¡Ãœ10
 ?5
-?? ) which is the total number of nodes, and a positive K (¡ÜN) which is the length of the sublist to be reversed. The address of a node is a 5-digit nonnegative integer, and NULL is represented by -1.
+?? ) which is the total number of nodes, and a positive K (Â¡ÃœN) which is the length of the sublist to be reversed. The address of a node is a 5-digit nonnegative integer, and NULL is represented by -1.
 
 Then N lines follow, each describes a node in the format:
 
