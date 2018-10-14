@@ -1,4 +1,5 @@
 #include<iostream>
+#include<queue>
 using namespace std;
 
 typedef int Vertex;
@@ -25,6 +26,7 @@ typedef struct Vnode
 	DataType data;
 }AdjList[MAX_N];
 
+bool vistied[MAX_N] = { 0 };
 struct LNode
 {
 	int Nv;
@@ -36,11 +38,13 @@ typedef LNode * LGraph;
 LGraph BuildGraph();
 LGraph CreateGraph(int Nv);
 void InsertEdge(LGraph Graph, Edge E);
-
+void DFS(LGraph Graph, Vertex v, void(*Visit)(Vertex));
+void Visit(Vertex v);
+void BFS(LGraph Graph, Vertex v, void(*Visit)(Vertex));
 int main()
 {
 	LGraph Graph = BuildGraph();
-	cout << Graph->Nv << " " << Graph->Ne << endl;
+	BFS(Graph, 0, Visit);
 	return 0;
 }
 
@@ -93,4 +97,44 @@ LGraph BuildGraph()
 	for (v = 0; v < Graph->Nv; v++)
 		cin >> Graph->G[v].data;
 	return Graph;
+}
+
+void Visit(Vertex v)
+{
+	cout << "顶点" << v << "正在被访问" << endl;
+}
+
+void DFS(LGraph Graph, Vertex v, void(*Visit)(Vertex))
+{
+	vistied[v] = true;
+	Visit(v);
+	AdjNode * w;
+	for (w = Graph->G[v].FirstEdge; w; w = w->next)
+	{
+		if (!vistied[w->Adjv])
+			DFS(Graph, w->Adjv, Visit);
+	}
+}
+
+void BFS(LGraph Graph, Vertex v, void(*Visit)(Vertex))
+{
+	queue<Vertex>q;
+	vistied[v] = true;
+	Visit(v);
+	q.push(v);
+	while (!q.empty())
+	{
+		v = q.front();
+		q.pop();
+		AdjNode * w;
+		for (w = Graph->G[v].FirstEdge; w; w = w->next)
+		{
+			if (!vistied[w->Adjv])
+			{
+				vistied[w->Adjv] = true;
+				Visit(w->Adjv);
+				q.push(w->Adjv);
+			}
+		}
+	}
 }
