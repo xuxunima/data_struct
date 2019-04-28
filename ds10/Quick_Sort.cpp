@@ -1,92 +1,62 @@
 #include<iostream>
+#include<stack>
 using namespace std;
 
-typedef int ElementType;
-const int Cutoff = 100;
-
-void Inserttion_Sort(ElementType A[], int N);
-void Swap(ElementType *a, ElementType *b);
-ElementType Median3(ElementType A[], int Left, int Right);
-void Quicksort(ElementType A[], int Left, int Right);
-void Quick_Sort(ElementType A[], int N);
-
-int main()
+void swap(int *a, int *b)
 {
-	int N = 200;
-	ElementType A[200];
-	for (int i = 0; i < N; i++)
-		A[i] = 200 - i;
-	Quick_Sort(A, N);
-	for (int i = 0; i < N; i++)
-		cout << A[i] << " ";
-	return 0;
-}
-
-void Swap(ElementType *a, ElementType *b)
-{
-	ElementType t;
-	t = *a;
+	int t = *a;
 	*a = *b;
 	*b = t;
 }
 
-ElementType Median3(ElementType A[], int Left, int Right)
+int Median3(int A[], int left, int right)
 {
-	int Center = (Left + Right) / 2;
-	if (A[Left] > A[Center])
-		Swap(&A[Left], &A[Center]);
-	if (A[Left] > A[Right])
-		Swap(&A[Left], &A[Right]);
-	if (A[Center] > A[Right])
-		Swap(&A[Center], &A[Right]);
-	Swap(&A[Center], &A[Right - 1]);
-	return A[Right - 1];
+	int center = (left + right) / 2;
+	if (A[left] > A[center])
+		swap(&A[left], &A[center]);
+	if (A[left] > A[right])
+		swap(&A[left], &A[right]);
+	if (A[center] > A[right])
+		swap(&A[center], &A[right]);
+	swap(&A[center], &A[right]);
+	return A[right];
 }
 
-void Quicksort(ElementType A[], int Left, int Right)
+int partition(int A[], int start, int end)
 {
-	if (Cutoff < Right - Left)
+
+	int p = Median3(A, start, end);
+
+	int i = start;
+	int j = end - 1;
+	while (i < j)
 	{
-		ElementType Pivot;
-		Pivot = Median3(A, Left, Right);
-		int i = Left;
-		int j = Right - 1;
-		for (;;)
-		{
-			while (A[++i] < Pivot) {};
-			while (A[--j] > Pivot) {};
-			if (i < j)
-				Swap(&A[i], &A[j]);
-			else
-				break;
-		}
-		Swap(&A[i], &A[Right - 1]);
-		Quicksort(A, Left, i - 1);
-		Quicksort(A, i + 1, Right);
+		while (A[i] < p)
+			i++;
+		while (A[j] > p)
+			j--;
+		if (i < j)
+			swap(&A[i++], &A[j--]);
 	}
-	else
-	{
-		Inserttion_Sort(A + Left, Right - Left + 1);
-	}
-	
+	swap(&A[i], &A[end]);
+	return i;
 }
 
-void Inserttion_Sort(ElementType A[], int N)
+void quicksort(int A[], int left, int right)
 {
-	int p,i;
-	ElementType Tmp;
-	for (p = 1; p < N; p++)
-	{
-		Tmp = A[p];
-		for (i = p; i > 0 && A[i-1] > Tmp; i--)
-		{
-			A[i] = A[i - 1];
-		}
-		A[i] = Tmp;
-	}
+	if (left > right)
+		return;
+	int  p = partition(A, left, right);
+	quicksort(A, left, p - 1);
+	quicksort(A, p + 1, right);
 }
 
-void Quick_Sort(ElementType A[], int N)
+int main()
 {
-	Quicksort(A, 0, N - 1);
+	int A[] = { 2,6,4,7,8,9,1,5 };
+	quicksort(A, 0, 7);
+	for (int i = 0; i < 8; i++)
+		cout << A[i];
+	cout << endl;
+	return 0;
 }
